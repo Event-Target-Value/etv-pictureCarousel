@@ -4,12 +4,15 @@ const express = require("express");
 const bodyParser = require("body-parser");  
 // import path
 const path = require("path");
+// import cors
+const cors = require('cors');
 
 //--------------------------------------------------------------------------
 
 // create app 
 let app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 
 
@@ -20,7 +23,7 @@ app.use(express.static(path.join(__dirname, "..", "client", "dist")));
 // require routes
 const routes = require(path.join(__dirname, "routes.js"))
 
-app.use("/", routes);
+app.use("/carousel", routes);
 
 //--------------------------------------------------------------------------
 

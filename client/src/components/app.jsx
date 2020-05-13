@@ -3,8 +3,7 @@ import axios from "axios";
 import Banner from "./banner.jsx";
 import Configurations from "./configurations.jsx";
 import ImageCarousel from "./imageCarousel.jsx";
-import Modal from "./modal.jsx";
-// import styles from "../style.module.css";
+import styles from "../style.css";
 
 class App extends React.Component {
     constructor(props) {
@@ -16,7 +15,7 @@ class App extends React.Component {
     }
 
     stateUpdater(callback) {
-        axios.get("/fetch")
+        axios.get("/carousel/fetch")
         .then(res => {
             // console.log(res.data[0])
             callback(null, res.data);
@@ -36,14 +35,13 @@ class App extends React.Component {
 
     render() {
         // console.log(this.state, "app state")
-        // console.log(styles.contents, "style!")
+        // console.log(JSON.stringify(styles), "style!")
         return (
             <div className="react-app">
                 <Banner productName={this.state.product.product_name}/>
                 <div className="contents">
                 <ImageCarousel images={this.state.product.photos} displayedImage={this.state.displayedImageObj}/>
                 <Configurations price={this.state.product.price} rating={this.state.product.rating} sizes={this.state.product.sizes}/> 
-                <Modal />
                 </div>
             </div>
         )
