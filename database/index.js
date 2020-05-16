@@ -1,7 +1,21 @@
 // require mongoose 
 let mongoose = require("mongoose");
 // connect mongoose at products
-mongoose.connect("mongodb://localhost/fec", {useNewUrlParser: true})
+// mongoose.connect("mongodb://mongo:27017/fec", {useNewUrlParser: true})
+const dotenv = require('dotenv');
+
+dotenv.config();
+const {
+  MONGO_HOSTNAME,
+  MONGO_DB,
+  MONGO_PORT,
+} = process.env;
+
+const dbConnectUrl = { LOCALURL: `mongodb://${MONGO_HOSTNAME}:${MONGO_PORT}/${MONGO_DB}` };
+
+// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fetcher');
+mongoose.connect(dbConnectUrl.LOCALURL);
+
 // have productModel schema 
 let connection = mongoose.connection;
 connection.on('error', console.error.bind(console, 'connection error:'));

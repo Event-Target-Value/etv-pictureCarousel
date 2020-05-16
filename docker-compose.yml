@@ -1,0 +1,57 @@
+# version: "3.7"
+# services: 
+#     web: 
+#         image: image1:1.0.0
+#         build: .
+#         command: "nodemon server/index.js"
+#         ports:
+#             - "3000:3000"
+#         depends_on: 
+#             - "mongo"
+#     mongo:
+#         image: mongo
+#         ports:
+#             - "27017:27017"
+
+version: '3.7'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: picture-carousel-server-img
+    container_name: pictureCarousel-server
+    volumes:
+        - .:/fec/pictureCarousel
+        - /fec/pictureCarousel/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    env_file: .env
+    environment:
+      - MONGO_HOSTNAME=$MONGO_HOSTNAME
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+    networks:
+    - picture-carousel-network
+  mongo:
+    image: mongo
+    container_name: picture-carousel-mongodb
+    volumes:
+        - data-volume:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+    - picture-carousel-network
+
+networks:
+    picture-carousel-network:
+        driver: bridge
+    
+volumes:
+    data-volume:
+    node_modules:
+    web-root:
+        driver: local 
